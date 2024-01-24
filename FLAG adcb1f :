@@ -1,0 +1,5 @@
+FLAG adcb1f :
+First of all I tried to get the IP address of Lazarus, as I knew that it was a ftp and by doing nmap I accomplished that at it was the only ftp address.
+Then I saw that there where many ports aviable for that address, and one of them was the ftp. After that I tried to enter to the tcp one and I needed a user and a password. 
+After being 1 hour trying to know this information I entered to canvas and realized that there was a page; Crack ftp passwords with thc hydra | tutorial; to know the passwords.
+So finally I get the password and knew the flag
