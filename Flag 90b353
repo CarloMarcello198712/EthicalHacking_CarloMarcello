@@ -1,0 +1,7 @@
+Flag 90b353:
+First of all we know with the help of the hint that the adress is 10.0.2.143. So now, I made an examination of all the ports using nmap -p of that adress to know all the different
+ports adressed to that IP Adress. After that by brute force I tried to put in the browser all the different ports, when I finally entered to a page that seemed to be the good one.
+This web is Tomcat and I realized that there was a botton for the managers. I pressed that botton and after that I had to put a user and a password to get in. I used hydra as in 
+the previos flag and reached to have a valid user and password. I had some difficulties as previously thought that the user and the password would be the same as in the ftp port.
+After knowing to get the new user and password I investigated a little bit and get into one link that seemed to have the flag. After that I got a message that there was the flag
+and make a page source view to get the flag, and there it was!!!!!
