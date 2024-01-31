@@ -1,0 +1,7 @@
+flag{521bce}:
+First of all I used the only free hint aviable for us that was that the host name is Cuiteur. Then I made a range scan of all the posible network IP addresses and realized that
+one of them, the 10.0.2.186 had this name on the information of the address. So what I did was putting that address on the fire fox and get into a web page that is named Cuiteur.
+After that I saw that I needed to enter with a name and a password and I made hydra technique to get one of this passwords. After that, I entered to the web page and start 
+investigating all of the web by going page by page. Then I searched in google how toweb crawling and gave me some tools like curl that I tried to use but without getting anything.
+In the end I started to inspect the web page using f12 until entering in a page where there was a suspicious comment in green that was the url of a old page. Then I put that url in the
+searcher and entered to a page where it has the flag.
