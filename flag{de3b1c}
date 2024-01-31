@@ -1,0 +1,9 @@
+flag{de3b1c}:
+First of all I started at he point that the IP address of Cultieur has also an sql port. Then I entered to canvas to learn the different commands to work with sql
+to finally find the flag. I tried different sqlmap commands such as sqlmap -u "http://10.0.2.186" --forms --crawl=2  or sqlmap -u "http://10.0.2.186" --dbs for getting the different
+tables of the database of Cultieur. Then I realized that I needed to use the checkpoint of the previous flag and use the url of that flag. So I finally put 
+sqlmap --cookie="PHPSESSID=jbaso9a5ipjpse3elsjtoegnm0" --url="http://10.0.2.186/php/recherche_old.php"  --data="recherche=inject_here" -p recherche --dump, where I searched
+for the cookie of the server using f12 in the page and I also use the --dump for backup or transfer to another SQL server my database. Finally I investigated in the output of 
+my command and saw a table called flags where there was my flag.
+
+
