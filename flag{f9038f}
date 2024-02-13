@@ -1,5 +1,4 @@
-flag{f9038f}:
-flag{9f1f16}: Start: Monday End: Tuesday TOTAL h spend: 7h
+flag{f9038f}:Start: Monday End: Tuesday TOTAL h spend: 7h
 Fisrt of all, once we have access to a Tomcat server, I searched different ways to exploit the host. I finally readed that one way to do that was by uploading a malicious WAR 
 file. So I decided to create a file called "file.war" and put malicious code that enabled me to open a shell toward the host of the Tomcat server.
 Then I used MSFvenom to create the WAR file so that I can simply pick up the shell, doing
