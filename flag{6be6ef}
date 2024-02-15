@@ -1,1 +1,26 @@
-flag{6be6ef}:
+flag{6be6ef}: Start: Wednesday End: Thursday TOTAL h spend: 8h
+First of all, given that I was connected at a telnet server from a user called mr_babbage I knew that I had to take connection as a root, beacuse the title of the flag is
+privilage escalation. After having searched for a long time (aprx 5h) and having tried lots of things such as linPEAS, different cron jobs that were in the machine, I finally
+decided to take the costly hint that told me:
+get-rekt-linux-hardened.c
+https://github.com/brl/grlh/blob/master/get-rekt-linux-hardened.c Alternatively, try the local_exploit_suggester module in Metasploit.
+After seeing that I was upset as I've also tried something similar as the hint was telling me. Then I just installed that git hub repository and started hacking :)
+What I did first was putting nc to open a connection between machines with port 1338 and transfer the git hub file:
+                                                    └─$ nc -l -p 1338 < file.c 
+Then I got connection to the machine server mr_babbage putting nc and my IP adress of my laptop (192.168.0.6)
+After that I run the file using gcc in the following way:
+                                                      mr_babbage@matrix1-sea-turtle:/tmp$ gcc -o test test.c
+After that I save it as a test and execute it to get privilages and being root of the server.
+Once I was root I made cd root and cd ./shh and got a private key with a long message. I called it id_rsa.
+Then I copied that message in my own machine and saved in in a file using nano and copying all the stuff.
+Then I executed the following command:
+                                                └─$ ssh root@10.0.2.115 -i file -p 52961
+and I realized it didn't work as I had not permissions to run it. So I didn't finished the work yet. I had to put the comand chmod to change permissions with:
+                                                  └─$ chmod 600 file
+and then I rewrited the same command. After that I managed to enter and I just put ls to get the flag :)
+
+
+
+
+
+
