@@ -1,2 +1,16 @@
-flag{14ce18}:
+flag{14ce18}: Start Datetime: Monday  End Datetime: Tuesday  Total Hour: 3h 
 
+First of all I read about the different tools we have on canvas to see what traffic sniffing was about.
+I decided to try solving the flag using the Cuiteur machine. So I first needed to connect again to that machine using the id_rsa key from previous flags.
+So I reused the same command ssh to get in the machine:
+                                              ssh root@10.0.2.186 -i id_rsa -p 52961
+
+After having connection to the machine I had some luck as the first think I tried to use seemed to works. That tool was tcpdump and was the first link of canvas 
+it was suggested for traffic sniffing. So I spend some time trying to know how to use that tool and finally used the following command:
+                                              tcpdump -i ens4 -w file.pcap
+I used -i to put the interface and -w to write the results on a file.pcap. After that I waited some minutes and then transfered to my own computer that flag so I 
+can be able to open it on Wireshark. Before that I removed the file from the Tomcat machine so no one can use my file to get their flag ;)
+
+So using netcat I transfered that file to my own computer machine and opened it in Wireshark. First of all I wasn't secure about what I was doing as I used the ctl f to
+serch the flag and I didn't find it between the packets. So after that I realized there was a tool for filtering the information in wireshark and I change them for getting
+packet details and String output. So after that I just make another time the ctl f puting the first part of the flag and there it was!!!
