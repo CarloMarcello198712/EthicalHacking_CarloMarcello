@@ -1,1 +1,11 @@
-flag{3b2000}: Start DATATIME: Sunday End DATATIME: Tuesday. Total time spend: 3h
+flag{5d402e}: Start DATATIME: Sunday End DATATIME: Tuesday. Total time spend: 3h
+For this flag I just spend lot of time searching for differet ways
+of performing client-side attacks. First I treid to know how to use BeEF
+by installing it and tried to connect to one IP Adress but I didnt managed
+do it so I tried other things. The second thing I tried was using fatrat
+as I found one youtube video that seemed interessting to perform client-side
+attack but at one point I didnt know how to manage using metasploit and fatrat
+at the same time to achive the client-side attack. 
+So after lots of hours searching inside the sea turtle machine I found that maybe 
+I could redirect Redirect one of the ip that is in /etc/php-dns/dns_records.json to
+my personal IP adress of my computer. 
