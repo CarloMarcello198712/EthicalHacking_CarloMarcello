@@ -1,1 +1,43 @@
+flag{2362e5}: Start: Monday End: Wednesday TOTAL h spend: 8h
+
+The main problem for this flag was the way of stating. With the title I didn't know very good how to start, so I decided to made a research on the topic 
+binary exploitation and try to undestand what is about. So I visited the useful links of the course related to that theme and start reading for a while.
+
+So first I read about the x86 instruction set architecture, that is the heart of CPUs that power our home computer and finish reading all the tutorial of
+that. After that, I read about how to do buffer overflow exploits and different techniques that I could apply for solving my exercice. Then I also was interested
+on the other different tools that you suggested in canvas such as Ghidra and I learned how that, can provide a set of tools for analyzing and understanding compiled
+code, making it useful for tasks such as malware analysis and vulnerability research, that was my main objective. So after different hours having read all that stuff
+I tried to apply them to find the flag.
+
+First I connected to mr_babbage user and tried to find any privileged executable that can be executed as a root. For that, I used the following command:
+
+                                                    sudo find / -type f \( -perm -4000 -o -perm -2000 \)
+Then I got the binary file called neuromancer.out and checked that it runs with root privileges (confirmed by ls -la).
+
+After that I identified a buffer overflow vulnerability in the program due to the use of strcpy without bounds checking. 
+
+So now was the time to explit that vulnerability with the different tools I read about. 
+First I confirmed the buffer overflow by causing a segmentation fault with a long string of characters and aimed to write our own instruction pointer to gain control 
+over the system's execution flow. After that I wanted to indentify the instruction pointer location.
+So what I did was filled the buffer with a distinct pattern (alphabet + reversed alphabet) to find the location of the instruction pointer.
+Then determined the meeting point between two alphabets, indicating the position where the instruction pointer was overwritten.
+
+Then I constructed my payload with the following order:
+- Calculated the payload length needed for exploitation (160 bytes, including the instruction pointer).
+- Developed a payload structure:
+                                                          [shellcode][NOP ... NOP][address]. 
+This was explained into one link. However, I tried that first and didn't work as it had to accomplish the constrian of the palindrome check forces us to create a mirrored payload:
+                                            [sserdda][NOP ... NOP][shellcode][edocllehs][NOP ... NOP][address]
+And this was not the only thing I needed to change, also I had to:
+- Took into account the null bytes in memory addresses and adjusted the payload length accordingly (158 bytes).
+- Calculated the number of NOP instructions required for padding on each side (25 NOPs).
+
+Then I assembled the payload:
+- Packed the address in both little and big endian formats.
+- Created NOP padding and assembled the final payload.
+
+And finally I just need execute the exploit by running the exploit by feeding it to neuromancer.out.
+Then I noted any segmentation faults and updated the start address accordingly. After that I achieved root privileges upon successful exploitation,
+gained control over the system's execution flow. So I saw I was root and I only needed to investigate in the files to get my flag, using ls as always.
+
 
